@@ -19,8 +19,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-    console.log(this.state.messages);
-
     this.state.socket.on('new message', (data) => {
       let currentMessages = this.state.messages;
       currentMessages.push(data.msg);
