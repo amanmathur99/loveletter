@@ -52,7 +52,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            omg heroku deploy is working!
           </a>
         </header>
         <p>{this.state.response}</p>
