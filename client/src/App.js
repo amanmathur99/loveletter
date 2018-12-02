@@ -46,14 +46,6 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            omg heroku deploy is working!
-          </a>
         </header>
         <p>{this.state.response}</p>
         <form onSubmit={this.handleSubmit}>
