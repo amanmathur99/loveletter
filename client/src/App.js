@@ -7,11 +7,20 @@ class App extends Component {
   constructor(props){
     super(props)
 
-    this.state = {
-      socket: io.connect('http://localhost:5000'),
-      message: '',
-      messages: []
+    if (process.env.NODE_ENV === 'production') {
+      this.state = {
+        socket: io.connect('https://loveletter-na.herokuapp.com:5000'),
+        message: '',
+        messages: []
+      }
+    } else {
+      this.state = {
+        socket: io.connect('http://localhost:5000'),
+        message: '',
+        messages: []
+      }
     }
+  
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
