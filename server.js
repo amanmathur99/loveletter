@@ -20,9 +20,26 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+//Logic
+users = [];
+connections = [];
+
 //Socket setup
 var io = socket(server);
-io.on('connection', function(socket){
-  console.log('made socket connection -server', socket.id)
+io.sockets.on('connection', function(socket){
+  console.log('connected to', socket.id)
+  connections.push(socket);
+
+  socket.on('disconnect', function(data) {
+    connections.splice(connections.indexOf(socket), 1);
+    console.log('Disconnected: %s sockets connected', connections.length);
+  });
+
+  //Send message
+  socket.on('send message', function(data){
+    console.log(data);
+    io.sockets.emit('new message', {msg: data});
+  });
+
 });
 

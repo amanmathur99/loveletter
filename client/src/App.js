@@ -8,22 +8,62 @@ class App extends Component {
     super(props)
 
     this.state = {
+      socket: io.connect('http://localhost:5000'),
+      message: '',
+      messages: []
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
   componentDidMount(){
-    //Make socket connection
-    this.connectToSocket();
+    console.log(this.state.messages);
+
+    this.state.socket.on('new message', (data) => {
+      let currentMessages = this.state.messages;
+      currentMessages.push(data.msg);
+      this.setState({messages: currentMessages});
+    })
   }
 
-  connectToSocket(){
-    var socket = io.connect('http://localhost:5000');
+  handleChange(e){
+    this.setState({message: e.target.value});
   }
+
+  handleSubmit(e){
+    e.preventDefault();
+    console.log(this.state.message);
+
+    //Socket send message;
+    this.state.socket.emit('send message', this.state.message);
+    this.setState({message: ''});
+  }
+
+
 
   render() {
     return (
-      <div>
-        Test
+      <div id="chat-container">
+        <ul className="user-list" id="users"></ul>
+        <ul className="message-list" id="Messages">
+        
+        {this.state.messages.map((item,i) => <li key={i}>{item}</li>)}
+
+
+        </ul>
+
+
+        <form onSubmit={this.handleSubmit}>
+         
+          <label>Message:
+          <input type="text" value={this.state.message} onChange={this.handleChange} ></input>
+          </label>
+
+          <input type="submit" value="Submit"></input>
+        </form>
+
       </div>
     );
   }
