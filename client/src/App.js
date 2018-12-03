@@ -7,9 +7,11 @@ class App extends Component {
   constructor(props){
     super(props)
 
+    console.log(process.env.NODE_ENV);
+
     if (process.env.NODE_ENV === 'production') {
       this.state = {
-        socket: io.connect('https://loveletter-na.herokuapp.com:5000'),
+        socket: io.connect('https://loveletter-na.herokuapp.com'),
         message: '',
         messages: []
       }
